@@ -3,9 +3,13 @@
 set -e
 
 DOMAIN=${DOMAIN:-my.domain.com}
-HTTP_ADDR=${HTTP_ADDR:-80}
-HTTPS_ADDR=${HTTPS_ADDR:-443}
-TUNNEL_ADDR=${TUNNEL_ADDR:-4443}
+HTTP_ADDR=:${HTTP_ADDR:-80}
+if [ -z "$HTTPS_ADDR" ]; then
+	HTTPS_ADDR=""
+else
+	HTTPS_ADDR=:$HTTPS_ADDR
+fi
+TUNNEL_ADDR=:${TUNNEL_ADDR:-4443}
 ARCH=${ARCH:-linux_amd64}
 EXT=""
 if [ $ARCH == windows_386 ] || [ $ARCH == windows_amd64 ]; then
@@ -72,9 +76,9 @@ start)
 		-tlsKey=/data/crt/device.key \
 		-tlsCrt=/data/crt/device.crt \
 		-domain="$DOMAIN" \
-		-httpAddr=":$HTTP_ADDR" \
-		-httpsAddr=":$HTTPS_ADDR" \
-		-tunnelAddr=":$TUNNEL_ADDR"
+		-httpAddr="$HTTP_ADDR" \
+		-httpsAddr="$HTTPS_ADDR" \
+		-tunnelAddr="$TUNNEL_ADDR"
 	;;
 getclient)
 	cat /data/bin/$ARCH/ngrok$EXT
