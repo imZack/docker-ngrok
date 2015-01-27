@@ -2,6 +2,8 @@ ngrok for Docker
 ================
 Self-hosting ngrok service
 
+[![](http://dockeri.co/image/zack/docker-ngrok)](https://registry.hub.docker.com/u/zack/docker-ngrok/)
+
 Step by Step
 ------------
 
